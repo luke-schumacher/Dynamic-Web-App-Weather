@@ -33,6 +33,8 @@ let weather = {
     document.querySelector(".weather").classList.remove("loading");
     document.body.style.backgroundImage =
       "url('https://source.unsplash.com/1600x900/?" + name + "')";
+    document.querySelector(".map").src = "https://maps.google.com/?ll="+data.coord.lat+","+data.coord.lon+"&z=8&t=k&output=embed"
+
   },
   search: function () {
     this.fetchWeather(document.querySelector(".search-bar").value);
