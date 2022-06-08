@@ -11,6 +11,17 @@ body {
   font-size: 120%;
 }
 
+.clock {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  color: white;
+  font-size: 60px;
+  font-family: inherit;
+  letter-spacing: 7px;
+}
+
 .card {
   background: #000000d0;
   color: white;
