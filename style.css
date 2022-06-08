@@ -22,7 +22,7 @@ body {
   text-align: center;
 }
 
-.card {
+.weather_background {
   background: #2d2930ea;
   color: white;
   padding: 2em;
@@ -64,7 +64,7 @@ input.search-bar {
 }
 
 button:hover {
-  background: #7c7c7c6b;
+  background: #a4a4a46b;
 }
 
 h1.temp {

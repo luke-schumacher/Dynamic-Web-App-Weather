@@ -11,8 +11,8 @@ let weather = {
     )
       .then((response) => {
         if (!response.ok) {
-          alert("No weather found.");
-          throw new Error("No weather found.");
+          alert("No results that match the query");
+          throw new Error("No results that match the query.");
         }
         return response.json();
       })
@@ -32,11 +32,12 @@ let weather = {
     document.querySelector(".humidity").innerText =
       "Humidity: " + humidity + "%";
     document.querySelector(".wind").innerText =
-      "Wind speed: " + speed + " km/h";
+      "Wind Speed: " + speed + " km/h";
     document.querySelector(".weather").classList.remove("loading");
     document.body.style.backgroundImage =
       "url('https://source.unsplash.com/1920x1080/?" + name + "')";
-    document.querySelector(".map").src = "https://maps.google.com/?ll="+data.coord.lat+","+data.coord.lon+"&z=8&t=k&output=embed"
+    document.querySelector(".map").src = "https://maps.google.com/?ll="+data.coord.lat+","+data.coord.lon+"&z=8&t=k&output=embed";
+    showTime();
 
   },
   search: function () {
@@ -90,4 +91,4 @@ function showTime(){
   
 }
 
-showTime();
+
