@@ -1,3 +1,5 @@
+var offset = 0;
+
 let weather = {
   apiKey: "0776477a4d15f54d82e4c105f937e4d4",
   fetchWeather: function (city) {
@@ -21,6 +23,7 @@ let weather = {
     const { icon, description } = data.weather[0];
     const { temp, humidity } = data.main;
     const { speed } = data.wind;
+    offset = data.timezone;
     document.querySelector(".city").innerText = "Weather in " + name;
     document.querySelector(".icon").src =
       "https://openweathermap.org/img/wn/" + icon + ".png";
@@ -32,7 +35,7 @@ let weather = {
       "Wind speed: " + speed + " km/h";
     document.querySelector(".weather").classList.remove("loading");
     document.body.style.backgroundImage =
-      "url('https://source.unsplash.com/1600x900/?" + name + "')";
+      "url('https://source.unsplash.com/1920x1080/?" + name + "')";
     document.querySelector(".map").src = "https://maps.google.com/?ll="+data.coord.lat+","+data.coord.lon+"&z=8&t=k&output=embed"
 
   },
@@ -57,12 +60,16 @@ weather.fetchWeather("Seoul");
 
 function showTime(){
   var date = new Date();
-  var h = date.getHours(); // 0 - 23
+  var h = date.getUTCHours() + offset / 3600; // 0 - 23
   var m = date.getMinutes(); // 0 - 59
   var s = date.getSeconds(); // 0 - 59
-  var session = "AM";
+  var session = "AM";;
   
-  if(h == 0){
+  if(h == 12){
+    session = "PM";
+  }
+
+  if(h == 24){
       h = 12;
   }
   
