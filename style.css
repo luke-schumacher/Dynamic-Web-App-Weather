@@ -14,13 +14,10 @@ body {
 
 .clock {
   padding-top: 20px;
-  top: 10%;
   color: white;
   font-size: 130%;
-  font-family: inherit;
-  letter-spacing: 7px;
+  letter-spacing: 4px;
   width: 100%;
-  max-width: 320px;
   align-items: center;
   text-align: center;
 }
