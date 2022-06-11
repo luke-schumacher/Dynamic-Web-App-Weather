@@ -1,29 +1,29 @@
 var offset = 0;
-
 let weather = {
   apiKey: "0776477a4d15f54d82e4c105f937e4d4",
-  fetchWeather: function (city) {
+  weatherRequest: function(city){
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
         city +
         "&units=metric&appid=" +
         this.apiKey
     )
-      .then((response) => {
-        if (!response.ok) {
+      .then((res) => {
+        if (!res.ok) {
           alert("No results that match the query");
           throw new Error("No results that match the query.");
         }
-        return response.json();
+        return res.json();
       })
-      .then((data) => this.displayWeather(data));
+      .then((data) => this.showWeather(data));
   },
-  displayWeather: function (data) {
-    const { name } = data;
-    const { icon, description } = data.weather[0];
-    const { temp, humidity } = data.main;
-    const { speed } = data.wind;
-    offset = data.timezone;
+  search: function () { this.weatherRequest(document.querySelector(".search-bar").value); },
+  showWeather: (res) => {
+    const { name } = res;
+    const { icon, description } = res.weather[0];
+    const { temp, humidity } = res.main;
+    const { speed } = res.wind;
+    offset = res.timezone;
     document.querySelector(".city").innerText = "Weather in " + name;
     document.querySelector(".icon").src =
       "https://openweathermap.org/img/wn/" + icon + ".png";
@@ -36,12 +36,9 @@ let weather = {
     document.querySelector(".weather").classList.remove("loading");
     document.body.style.backgroundImage =
       "url('https://source.unsplash.com/1920x1080/?" + name + "')";
-    document.querySelector(".map").src = "https://maps.google.com/?ll="+data.coord.lat+","+data.coord.lon+"&z=8&t=k&output=embed";
+    document.querySelector(".map").src = "https://maps.google.com/?ll=" + res.coord.lat + "," + res.coord.lon + "&z=8&t=k&output=embed";
     showTime();
 
-  },
-  search: function () {
-    this.fetchWeather(document.querySelector(".search-bar").value);
   },
 };
 
@@ -51,13 +48,13 @@ document.querySelector(".search button").addEventListener("click", function () {
 
 document
   .querySelector(".search-bar")
-  .addEventListener("keyup", function (event) {
-    if (event.key == "Enter") {
-      weather.search();
-    }
-  });
+  .addEventListener("keyup", (e) => {
+      if (e.key == "Enter") {
+        weather.search();
+      }
+    });
 
-weather.fetchWeather("Seoul");
+weather.weatherRequest("Seoul");
 
 function showTime(){
   var date = new Date();
