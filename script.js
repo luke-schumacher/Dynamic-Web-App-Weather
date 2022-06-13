@@ -58,17 +58,45 @@ weather.weatherRequest("Seoul");
 
 function showTime(){
   var date = new Date();
-  var h = date.getUTCHours() + offset / 3600; // 0 - 23
-  var m = date.getMinutes(); // 0 - 59
-  var s = date.getSeconds(); // 0 - 59
+  var h = date.getUTCHours() + parseInt(offset / 3600); // 0 - 23
+  var m = date.getMinutes() + parseInt((offset % 3600)/60); // 0 - 59
+  var s = date.getSeconds() + parseInt((offset % 3600)%60); // 0 - 59
   var session = "AM";;
   
+  if(m > 60){
+    m = m - 60;
+    h = h + 1;
+  }
+
+  if(s > 60){
+    s = m - 60;
+    m = m + 1;
+  }
+
+  if(m < 0){
+    m = m + 60;
+    h = h - 1;
+  }
+
+  if(s < 0){
+    s = m + 60;
+    m = m - 1;
+  }
+
   if(h == 12){
     session = "PM";
   }
 
   if(h == 24){
       h = 12;
+  }
+
+  if(h < 0){
+    h = mod(h,24);
+  }
+
+  if(h > 24){
+    h = mod(h,24);
   }
   
   if(h > 12){
@@ -89,3 +117,6 @@ function showTime(){
 }
 
 
+function mod(n, m) {
+  return ((n % m) + m) % m;
+}
